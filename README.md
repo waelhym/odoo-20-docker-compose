@@ -2,21 +2,21 @@
 
 Set up **Odoo 20** in a single command using Docker Compose — with support for running multiple Odoo instances on one server.
 
-> **Default master password:** `minhng.info` — change it before going live.
+> **Master password:** pass your private password with `--password`. Do not commit production passwords to GitHub.
 
 ## Quick Start
 
 Install [Docker](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) first, then run the following to set up your first Odoo instance at `localhost:10020`:
 
 ```bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-20-docker-compose/master/run.sh \
+curl -s https://raw.githubusercontent.com/waelhym/odoo-20-docker-compose/master/run.sh \
   | bash -s -- --destination odoo-one --port 10020 --chat 20020
 ```
 
 and/or run the following to set up another Odoo instance at `localhost:11020`:
 
 ```bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-20-docker-compose/master/run.sh \
+curl -s https://raw.githubusercontent.com/waelhym/odoo-20-docker-compose/master/run.sh \
   | bash -s -- --destination odoo-two --port 11020 --chat 21020
 ```
 
@@ -34,7 +34,7 @@ sudo yum install curl         # RHEL / CentOS
 | `--destination` | Yes | `odoo-one` | Name of the deploy folder where the stack is cloned |
 | `--port` | Yes | `10020` | Odoo web port exposed on the host |
 | `--chat` | Yes | `20020` | Live-chat port exposed on the host |
-| `--password` | No | `mymaster` | Odoo master password (**admin_passwd**). Defaults to the value in **etc/odoo.conf** |
+| `--password` | No | `mymaster` | Odoo master password (**admin_passwd**). Overrides the non-secret placeholder in **etc/odoo.conf** |
 | `--db-password` | No | `dbSecret` | PostgreSQL password (**POSTGRES_PASSWORD**/**PASSWORD**). Defaults to `odoo20@2026` |
 
 ### Examples with custom passwords
@@ -42,14 +42,14 @@ sudo yum install curl         # RHEL / CentOS
 Custom master password:
 
 ```bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-20-docker-compose/master/run.sh \
+curl -s https://raw.githubusercontent.com/waelhym/odoo-20-docker-compose/master/run.sh \
   | bash -s -- --destination odoo-one --port 10020 --chat 20020 --password mymaster
 ```
 
 Custom master + database passwords:
 
 ```bash
-curl -s https://raw.githubusercontent.com/minhng92/odoo-20-docker-compose/master/run.sh \
+curl -s https://raw.githubusercontent.com/waelhym/odoo-20-docker-compose/master/run.sh \
   | bash -s -- --destination odoo-one --port 10020 --chat 20020 \
     --password mymaster --db-password dbSecret
 ```
@@ -143,7 +143,7 @@ Deploy Odoo enterprise with docker-compose in a **separate directory**, without 
 
 - **Configuration:** edit [`etc/odoo.conf`](etc/odoo.conf)
 - **Server log:** `etc/odoo-server.log`
-- **Default admin password:** `admin_passwd = minhng.info` in [`etc/odoo.conf`](etc/odoo.conf) — override at setup time with `--password`
+- **Admin password:** `etc/odoo.conf` contains a non-secret placeholder. Set the real master password at setup time with `--password`.
 
 ## Container Management
 
